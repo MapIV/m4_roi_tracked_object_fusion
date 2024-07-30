@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "image_projection_based_fusion/utils/utils.hpp"
-namespace image_projection_based_fusion
+#include "roi_tracked_object_fusion/utils/utils.hpp"
+namespace roi_tracked_object_fusion
 {
 
 std::optional<geometry_msgs::msg::TransformStamped> getTransformStamped(
@@ -26,7 +26,7 @@ std::optional<geometry_msgs::msg::TransformStamped> getTransformStamped(
       target_frame_id, source_frame_id, time, rclcpp::Duration::from_seconds(0.01));
     return transform_stamped;
   } catch (tf2::TransformException & ex) {
-    RCLCPP_WARN_STREAM(rclcpp::get_logger("image_projection_based_fusion"), ex.what());
+    RCLCPP_WARN_STREAM(rclcpp::get_logger("roi_tracked_object_fusion"), ex.what());
     return std::nullopt;
   }
 }
@@ -267,4 +267,4 @@ pcl::PointXYZ getClosestPoint(const pcl::PointCloud<pcl::PointXYZ> & cluster)
   return closest_point;
 }
 
-}  // namespace image_projection_based_fusion
+}  // namespace roi_tracked_object_fusion

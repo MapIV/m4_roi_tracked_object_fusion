@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "image_projection_based_fusion/utils/geometry.hpp"
+#include "roi_tracked_object_fusion/utils/geometry.hpp"
 
 #include <rclcpp/rclcpp.hpp>
 
-namespace image_projection_based_fusion
+namespace roi_tracked_object_fusion
 {
 
 double calcIoU(
@@ -100,7 +100,7 @@ void objectToVertices(
   } else if (shape.type == Shape::POLYGON) {
     // polygonToVertices(pose, shape, vertices);
     RCLCPP_WARN_STREAM(
-      rclcpp::get_logger("image_projection_based_fusion"), "POLYGON is not supported");
+      rclcpp::get_logger("roi_tracked_object_fusion"), "POLYGON is not supported");
   }
 }
 
@@ -204,4 +204,4 @@ void sanitizeROI(sensor_msgs::msg::RegionOfInterest & roi, const int width_, con
   }
 }
 
-}  // namespace image_projection_based_fusion
+}  // namespace roi_tracked_object_fusion
