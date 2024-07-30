@@ -19,6 +19,8 @@ ament_auto_add_library(${PROJECT_NAME} SHARED
   src/fusion_node.cpp
   src/debugger.cpp
   src/roi_tracked_object_fusion/node.cpp
+  src/utils/utils.cpp
+  src/utils/geometry.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
