@@ -33,6 +33,9 @@ RoiTrackedObjectFusionNode::RoiTrackedObjectFusionNode(const rclcpp::NodeOptions
   fusion_params_.trust_distances = declare_parameter<std::vector<double>>("trust_distances");
   fusion_params_.use_roi_probability = declare_parameter<bool>("use_roi_probability");
   fusion_params_.roi_probability_threshold = declare_parameter<double>("roi_probability_threshold");
+  fusion_params_.allow_no_matching_roi = declare_parameter<bool>("allow_no_matching_roi", true);
+  fusion_params_.filter_unknown_classes = declare_parameter<bool>("filter_unknown_classes", false);
+  
   {
     const auto can_assign_vector_tmp = declare_parameter<std::vector<int64_t>>("can_assign_matrix");
     std::vector<int> can_assign_vector(can_assign_vector_tmp.begin(), can_assign_vector_tmp.end());
@@ -59,6 +62,9 @@ void RoiTrackedObjectFusionNode::preprocess(TrackedObjects & output_msg)
     const auto trust_sqr_dist =
       fusion_params_.trust_distances.at(label) * fusion_params_.trust_distances.at(label);
     if (object.existence_probability > prob_threshold || object_sqr_dist > trust_sqr_dist) {
+      passthrough_object_flags.at(obj_i) = true;
+    }
+    if (fusion_params_.allow_no_matching_roi && label != ObjectClassification::UNKNOWN) {
       passthrough_object_flags.at(obj_i) = true;
     }
   }
@@ -253,7 +259,11 @@ void RoiTrackedObjectFusionNode::fuseObjectsOnImage(
         fused_object_flags.at(obj_i) = true;
       }
     } else {
-      ignored_object_flags.at(obj_i) = true;
+      if (fusion_params_.allow_no_matching_roi) {
+        fused_object_flags.at(obj_i) = true;
+      } else {
+        ignored_object_flags.at(obj_i) = true;
+      }
     }
   }
 }
@@ -310,11 +320,16 @@ void RoiTrackedObjectFusionNode::publish(const TrackedObjects & output_msg)
   debug_ignored_objects_msg.header = output_msg.header;
   for (std::size_t obj_i = 0; obj_i < output_msg.objects.size(); ++obj_i) {
     const auto & obj = output_msg.objects.at(obj_i);
+    const auto label = object_recognition_utils::getHighestProbLabel(obj.classification);
     if (passthrough_object_flags.at(obj_i)) {
-      output_objects_msg.objects.emplace_back(obj);
+      if (!fusion_params_.filter_unknown_classes || label != ObjectClassification::UNKNOWN) {
+        output_objects_msg.objects.emplace_back(obj);
+      }
     }
     if (fused_object_flags.at(obj_i)) {
-      output_objects_msg.objects.emplace_back(obj);
+      if (!fusion_params_.filter_unknown_classes || label != ObjectClassification::UNKNOWN) {
+        output_objects_msg.objects.emplace_back(obj);
+      }
       debug_fused_objects_msg.objects.emplace_back(obj);
     }
     if (ignored_object_flags.at(obj_i)) {

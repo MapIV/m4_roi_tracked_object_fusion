@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(roi_tracked_object_fusion)
+project(m4_roi_tracked_object_fusion)
 # add_compile_options(-Wno-unknown-pragmas)
 add_compile_options(-Wno-unknown-pragmas -fopenmp)
 
@@ -30,7 +30,7 @@ target_link_libraries(${PROJECT_NAME}
 
 rclcpp_components_register_node(${PROJECT_NAME}
   PLUGIN "roi_tracked_object_fusion::RoiTrackedObjectFusionNode"
-  EXECUTABLE roi_tracked_object_fusion_node
+  EXECUTABLE m4_roi_tracked_object_fusion_node
 )
 
 ament_auto_package(INSTALL_TO_SHARE

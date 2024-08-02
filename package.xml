@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>roi_tracked_object_fusion</name>
+  <name>m4_roi_tracked_object_fusion</name>
   <version>0.1.0</version>
   <description>Addon to Autoware image_projection_based_fusion package</description>
-  <maintainer email="support@map4.jp">Yukihiro Saito</maintainer>
+  <maintainer email="support@map4.jp">MapIV</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>

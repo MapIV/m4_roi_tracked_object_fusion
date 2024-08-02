@@ -18,8 +18,8 @@
   <arg name="input/camera_info7" default="/camera_info7"/>
   <arg name="input/objects" default="objects"/>
   <arg name="output/objects" default="fused_objects"/>
-  <arg name="param_path" default="$(find-pkg-share roi_tracked_object_fusion)/config/roi_tracked_object_fusion.param.yaml"/>
-  <arg name="sync_param_path" default="$(find-pkg-share roi_tracked_object_fusion)/config/roi_sync.param.yaml"/>
+  <arg name="param_path" default="$(find-pkg-share m4_roi_tracked_object_fusion)/config/m4_roi_tracked_object_fusion.param.yaml"/>
+  <arg name="sync_param_path" default="$(find-pkg-share m4_roi_tracked_object_fusion)/config/roi_sync.param.yaml"/>
 
   <!-- for eval variable-->
   <arg name="input_rois_number" default="$(var input/rois_number)"/>
@@ -35,7 +35,7 @@
   <arg name="input/image7" default="/image_raw7"/>
 
   <group>
-    <node pkg="roi_tracked_object_fusion" exec="roi_tracked_object_fusion_node" name="$(anon roi_tracked_object_fusion)" output="screen">
+    <node pkg="m4_roi_tracked_object_fusion" exec="m4_roi_tracked_object_fusion_node" name="$(anon m4_roi_tracked_object_fusion)" output="screen">
       <param name="rois_number" value="$(var input/rois_number)"/>
       <param from="$(var sync_param_path)"/>
       <param from="$(var param_path)"/>

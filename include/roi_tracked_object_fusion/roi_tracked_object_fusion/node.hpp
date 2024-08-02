@@ -28,6 +28,7 @@ namespace roi_tracked_object_fusion
 {
 
 using sensor_msgs::msg::RegionOfInterest;
+using autoware_auto_perception_msgs::msg::ObjectClassification;
 
 class RoiTrackedObjectFusionNode : public FusionNode<TrackedObjects, TrackedObject>
 {
@@ -64,6 +65,8 @@ private:
     bool use_roi_probability{};
     double roi_probability_threshold{};
     Eigen::MatrixXi can_assign_matrix;
+    bool allow_no_matching_roi{};
+    bool filter_unknown_classes{};
   } fusion_params_;
 
   std::map<int64_t, std::vector<bool>> passthrough_object_flags_map_, fused_object_flags_map_,

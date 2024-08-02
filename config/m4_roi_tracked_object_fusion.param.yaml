@@ -1,0 +1,21 @@
+/**:
+  ros__parameters:
+    # UNKNOWN, CAR, TRUCK, BUS, TRAILER, MOTORBIKE, BICYCLE, PEDESTRIAN
+    passthrough_lower_bound_probability_thresholds: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+    trust_distances: [100.0, 200.0, 200.0, 200.0, 200.0, 100.0, 100.0, 100.0]
+    min_iou_threshold: 0.20
+    use_roi_probability: false
+    roi_probability_threshold: 0.25
+    allow_no_matching_roi: true
+    filter_unknown_classes: true
+
+    can_assign_matrix:
+      #UNKNOWN, CAR, TRUCK, BUS, TRAILER, MOTORBIKE, BICYCLE, PEDESTRIAN <-roi_msg
+      [1,       1,   1,     1,   1,       1,         1,       1,         # UNKNOWN <-detected_objects
+       1,       1,   1,     1,   1,       1,         1,       1,         # CAR
+       1,       1,   1,     1,   1,       1,         1,       1,         # TRUCK
+       1,       1,   1,     1,   1,       1,         1,       1,         # BUS
+       1,       1,   1,     1,   1,       1,         1,       1,         # TRAILER
+       1,       1,   1,     1,   1,       1,         1,       1,         # MOTORBIKE
+       1,       1,   1,     1,   1,       1,         1,       1,         # BICYCLE
+       1,       1,   1,     1,   1,       1,         1,       1]         # PEDESTRIAN
